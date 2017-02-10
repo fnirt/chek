@@ -22,13 +22,24 @@ module.exports = {
 		                db.run("CREATE TABLE picheckins (    id INTEGER PRIMARY KEY   AUTOINCREMENT,servername TEXT,ip TEXT,lastseen TEXT,jsondata TEXT);");
 		        }
 		
-		        db.each("SELECT * FROM picheckins ", function(err, row) {
-		                console.log(row.id +
-		                ": " + row.servername +
-		                ": " + row.ip +
-		                ": " + row.lastseen +
-		                ":" + row.jsondata);
-	        	        });
+
+
+db.all("SELECT *  FROM picheckins", function(err, rows) {
+
+        rows.forEach(function (row) {
+		callback(row);
+        })
+	});
+
+
+
+//		        db.each("SELECT top 10 * FROM picheckins order by lastseen desc ", function(err, row) {
+//		                console.log(row.id +
+//		                ": " + row.servername +
+//		                ": " + row.ip +
+//		                ": " + row.lastseen +
+//		                ":" + row.jsondata);
+//	        	        });
 		        });
 	
 		db.close();
@@ -59,4 +70,13 @@ module.exports = {
 
 var zemba = function () {
 	console.log("foo");
+}
+
+function callback(row) {
+                console.log(row.id +
+                ": " + row.servername +
+                ": " + row.ip +
+                ": " + row.lastseen +
+                ":" + row.jsondata);
+
 }
